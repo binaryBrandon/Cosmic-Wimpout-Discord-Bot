@@ -1,0 +1,15 @@
+{
+  "name": "cosmic-wimpout",
+  "version": "1.0.0",
+  "description": "a discord bot to play cosmic wimpout",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "binaryBrandon",
+  "license": "ISC"
+}
