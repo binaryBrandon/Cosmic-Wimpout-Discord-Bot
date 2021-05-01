@@ -10,4 +10,3 @@ client.once('ready', () => {
 //.env with TOKEN= exists in directory
 
 client.login(process.env.TOKEN);
-//some comment
