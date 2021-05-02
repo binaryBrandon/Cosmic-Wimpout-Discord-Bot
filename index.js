@@ -147,15 +147,16 @@ function rollDice(message) {
           default:
             message.channel.send('Something went wrong. Freight Train. ${roll}');
       }
-    } else if ((roll[0] === roll[1] && roll[0] === roll[2]) ||
-      (roll[0] === roll[1] && roll[0] === roll[3]) ||
-      (roll[0] === roll[1] && roll[0] === roll[4]) ||
-      (roll[0] === roll[2] && roll[0] === roll[3]) ||
-      (roll[0] === roll[2] && roll[0] === roll[4]) ||
-      (roll[0] === roll[3] && roll[0] === roll[4]) ||
-      (roll[1] === roll[2] && roll[1] === roll[3]) ||
-      (roll[1] === roll[2] && roll[1] === roll[4]) ||
-      (roll[1] === roll[3] && roll[1] === roll[4]) ||
-      (roll[2] === roll[3] && roll[2] === roll[4])  )
+    } //else if ((roll[0] === roll[1] && roll[0] === roll[2]) ||
+      // (roll[0] === roll[1] && roll[0] === roll[3]) ||
+      // (roll[0] === roll[1] && roll[0] === roll[4]) ||
+      // (roll[0] === roll[2] && roll[0] === roll[3]) ||
+      // (roll[0] === roll[2] && roll[0] === roll[4]) ||
+      // (roll[0] === roll[3] && roll[0] === roll[4]) ||
+      // (roll[1] === roll[2] && roll[1] === roll[3]) ||
+      // (roll[1] === roll[2] && roll[1] === roll[4]) ||
+      // (roll[1] === roll[3] && roll[1] === roll[4]) ||
+      // (roll[2] === roll[3] && roll[2] === roll[4])  )
+      //there has to be a better algorithm for this - maybe sorting the array and comparing?
   }
 }
