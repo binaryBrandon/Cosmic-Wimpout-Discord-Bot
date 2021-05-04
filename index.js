@@ -24,6 +24,7 @@ var started = false;
 var roll = [];
 var pointsThisRoll;
 var testArray = [];
+var pointTarget;
 
 client.on('message', message => {
   //console.log(typeof message);
@@ -78,6 +79,7 @@ function myFunc(message) {
 function newGame(message, pointGoal) {
   players = [];
   started = true;
+  pointTarget = pointGoal;
   players.push(message.author.username);
   message.channel.send(`Starting new game to ${pointGoal}. Type !join to play!\nCurrent players: ${players}`);
   //do logic to let people opt-in to game
@@ -86,6 +88,7 @@ function newGame(message, pointGoal) {
 
 function rollDice(message) {
   roll = [];
+  pointsThisRoll = 0;
   for (i = 0; i < 5; i++) {
     roll[i] = (Math.floor(Math.random() * 6) + 1);
     if (i < 4) { //display images for the white cubes
@@ -112,6 +115,8 @@ function rollDice(message) {
     }
   } //end for loop
 
+  roll.sort();
+
   for (i = 1; i < 5; i++) {
     testArray = roll.filter(function({
       roll[i] == roll[i - 1];
@@ -119,44 +124,94 @@ function rollDice(message) {
     if (roll[0] === roll[1] && roll[0] === roll[2] && roll[0] === roll[3] && roll[0] === roll[4] && roll[4] !== 3) {
       //freight train
       //if roll[4] !== 3, it's not wild and the freight train is forced
-      switch (roll[0]) {
+      //no additional logic required
+
+      switch (roll[0]) { //switch on first value to determine how many points
         case 1:
           //supernova
-          if (roll[4] === 3) {
-            break; //if the sun cube was wild, make it something other than a 10 to avoid supernova
-          } else {
-            //end game
-            started = false;
-            message.channel.send(`Supernova! ${message.author.username} loses!`);
-            break;
-          }
-          case 2:
-            break;
-          case 3:
-            break;
-          case 4:
-            break;
-          case 5:
-            break;
-          case 6:
-            //instant win
-            started = false;
-            message.channel.send(`Instant win for ${message.author.username}!`);
-            break;
-            break;
-          default:
-            message.channel.send('Something went wrong. Freight Train. ${roll}');
+
+          //this logic unneccessary due to if statement above          // if (roll[4] === 3) {
+          //   break; //if the sun cube was wild, make it something other than a 10 to avoid supernova
+          // } else {
+
+          //end game
+          started = false;
+          pointTarget = null;
+          message.channel.send(`Supernova! ${message.author.username} loses!`);
+          break;
+          // }
+        case 2:
+          //+200 pts
+          message.channel.send(`200 points!`)
+          pointsThisRoll += 200;
+          break;
+        case 3:
+          //+300 pts
+          message.channel.send(`300 points!`)
+          pointsThisRoll += 300;
+          break;
+        case 4:
+          //+400 pts
+          message.channel.send(`400 points!`)
+          pointsThisRoll += 400;
+          break;
+        case 5:
+          //+500 pts
+          message.channel.send(`500 points!`)
+          pointsThisRoll += 500;
+          break;
+        case 6:
+          //instant win
+          started = false;
+          pointTarget = null;
+          message.channel.send(`Instant win for ${message.author.username}!`);
+          break;
+        default:
+          message.channel.send(`Something went wrong. Freight Train. ${roll}.`);
       }
-    } //else if ((roll[0] === roll[1] && roll[0] === roll[2]) ||
-      // (roll[0] === roll[1] && roll[0] === roll[3]) ||
-      // (roll[0] === roll[1] && roll[0] === roll[4]) ||
-      // (roll[0] === roll[2] && roll[0] === roll[3]) ||
-      // (roll[0] === roll[2] && roll[0] === roll[4]) ||
-      // (roll[0] === roll[3] && roll[0] === roll[4]) ||
-      // (roll[1] === roll[2] && roll[1] === roll[3]) ||
-      // (roll[1] === roll[2] && roll[1] === roll[4]) ||
-      // (roll[1] === roll[3] && roll[1] === roll[4]) ||
-      // (roll[2] === roll[3] && roll[2] === roll[4])  )
-      //there has to be a better algorithm for this - maybe sorting the array and comparing?
+    } else if (roll[0] === roll[2] || roll[1] === roll[3]] || roll[2] === roll[4]) {
+    //flash (3 of a kind)
+    //switch to determine point value
+    switch (roll[0]) {
+      case 1:
+        message.channel.send(`100 point flash!`);
+        pointsThisRoll += 100;
+        break;
+      case 2:
+        message.channel.send(`20 point flash!`);
+        pointsThisRoll += 20;
+        break;
+      case 3:
+        message.channel.send(`30 point flash!`);
+        pointsThisRoll += 30;
+        break;
+      case 4:
+        message.channel.send(`40 point flash!`);
+        pointsThisRoll += 40;
+        break;
+      case 5:
+        message.channel.send(`50 point flash!`);
+        pointsThisRoll += 50;
+        break;
+      case 6:
+        message.channel.send(`60 point flash!`);
+        pointsThisRoll += 60;
+        break;
+      default:
+        message.channel.send(`Something went wrong. Flash. ${roll}.`)
+    }
   }
+  //else if ((roll[0] === roll[1] && roll[0] === roll[2]) ||
+  // (roll[0] === roll[1] && roll[0] === roll[3]) ||
+  // (roll[0] === roll[1] && roll[0] === roll[4]) ||
+  // (roll[0] === roll[2] && roll[0] === roll[3]) ||
+  // (roll[0] === roll[2] && roll[0] === roll[4]) ||
+  // (roll[0] === roll[3] && roll[0] === roll[4]) ||
+  // (roll[1] === roll[2] && roll[1] === roll[3]) ||
+  // (roll[1] === roll[2] && roll[1] === roll[4]) ||
+  // (roll[1] === roll[3] && roll[1] === roll[4]) ||
+  // (roll[2] === roll[3] && roll[2] === roll[4])  )
+  //there has to be a better algorithm for this - maybe sorting the array and comparing?
+  //}
+
 }
